@@ -1,0 +1,364 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model BagianUnitKerja {
+  id                 String               @id @default(uuid()) @db.Uuid
+  nama               String               @unique @db.VarChar(100)
+  createdBy          String               @map("created_by") @db.VarChar(100)
+  createdAt          DateTime             @default(now()) @map("created_at")
+  updatedBy          String               @map("updated_by") @db.VarChar(100)
+  updatedAt          DateTime             @updatedAt @map("updated_at")
+  strukturOrganisasi StrukturOrganisasi[]
+
+  @@map("bag_uker")
+}
+
+model Dosen {
+  id        String   @id @default(uuid()) @db.Uuid
+  pegawaiId String   @unique @map("pegawai_id") @db.VarChar(18)
+  scopusId  String?  @map("scopus_id") @db.VarChar(11)
+  wosId     String?  @map("wos_id") @db.VarChar(13)
+  gsId      String?  @map("gs_id") @db.VarChar(15)
+  orcidId   String?  @map("orcid_id") @db.VarChar(22)
+  nidn      String?  @db.VarChar(10)
+  sintaId   String?  @map("sinta_id") @db.VarChar(7)
+  prodiId   String?  @map("prodi_id") @db.Uuid
+  createdBy String   @map("created_by") @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedBy String   @map("updated_by") @db.VarChar(100)
+  updatedAt DateTime @updatedAt @map("updated_at")
+  pegawai   Pegawai  @relation(fields: [pegawaiId], references: [id])
+  prodi     Prodi?   @relation(fields: [prodiId], references: [id])
+
+  @@map("dosen")
+}
+
+model Fakultas {
+  id        String   @id @db.VarChar(5)
+  nama      String   @unique @db.VarChar(50)
+  createdBy String   @map("created_by") @db.VarChar(100)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedBy String   @map("updated_by") @db.VarChar(100)
+  updatedAt DateTime @updatedAt @map("updated_at")
+  prodi     Prodi[]
+
+  @@map("fakultas")
+}
+
+model GradeRemun {
+  id                 String               @id @db.VarChar(3)
+  remun              Int
+  createdBy          String               @map("created_by") @db.VarChar(100)
+  createdAt          DateTime             @default(now()) @map("created_at")
+  updatedBy          String               @map("updated_by") @db.VarChar(100)
+  updatedAt          DateTime             @updatedAt @map("updated_at")
+  strukturJabatan    StrukturJabatan[]
+  strukturOrganisasi StrukturOrganisasi[]
+
+  @@map("grade_remun")
+}
+
+model Jabatan {
+  id           String         @id @db.VarChar(3)
+  nama         String         @unique @db.VarChar(50)
+  createdBy    String         @map("created_by") @db.VarChar(100)
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedBy    String         @map("updated_by") @db.VarChar(100)
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+  levelJabatan LevelJabatan[]
+
+  @@map("jabatan")
+}
+
+model JabatanKemenag {
+  id          String   @id @default(uuid()) @db.Uuid
+  nama        String?  @db.VarChar(100)
+  noSk        String?  @map("no_sk") @db.VarChar(50)
+  tmt         DateTime @db.Date
+  unitKerja   String?  @map("unit_kerja") @db.VarChar(250)
+  pegawaiId   String   @map("pegawai_id") @db.VarChar(18)
+  bidangStudi String?  @map("bidang_studi") @db.VarChar(100)
+  pegawai     Pegawai  @relation(fields: [pegawaiId], references: [id])
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("jabatan_kemenag")
+}
+
+model StrukturJabatan {
+  id                String           @id @default(uuid()) @db.Uuid
+  levelJabatanId    String           @map("level_id") @db.Uuid
+  sublevelJabatanId String?          @map("sublevel_id") @db.Uuid
+  gradeId           String?          @map("grade_id") @db.VarChar(3)
+  createdBy         String           @map("created_by") @db.VarChar(100)
+  createdAt         DateTime         @default(now()) @map("created_at")
+  updatedBy         String           @map("updated_by") @db.VarChar(100)
+  updatedAt         DateTime         @updatedAt @map("updated_at")
+  levelJabatan      LevelJabatan     @relation(fields: [levelJabatanId], references: [id])
+  sublevelJabatan   SublevelJabatan? @relation(fields: [sublevelJabatanId], references: [id])
+  gradeRemun        GradeRemun?      @relation(fields: [gradeId], references: [id])
+  pegawai           Pegawai[]
+
+  @@map("struktur_jabatan")
+}
+
+model LevelJabatan {
+  id              String            @id @default(uuid()) @db.Uuid
+  nama            String            @unique @db.VarChar(50)
+  createdBy       String            @map("created_by") @db.VarChar(100)
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedBy       String            @map("updated_by") @db.VarChar(100)
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  jabatanId       String            @map("jabatan_id") @db.VarChar(3)
+  ssoRoleCode     String            @map("sso_role_code") @db.VarChar(4)
+  strukturJabatan StrukturJabatan[]
+  jabatan         Jabatan           @relation(fields: [jabatanId], references: [id])
+  ssoRole         SsoRole           @relation(fields: [ssoRoleCode], references: [code])
+
+  @@map("level_jabatan")
+}
+
+model Pangkat {
+  id            String   @id @default(uuid()) @db.Uuid
+  nama          String?  @db.VarChar(50)
+  golonganRuang String?  @map("gol_ruang") @db.VarChar(5)
+  noSk          String?  @map("no_sk") @db.VarChar(50)
+  tmt           DateTime @db.Date
+  ket           String?  @db.VarChar(100)
+  pegawaiId     String   @map("pegawai_id") @db.VarChar(18)
+  pegawai       Pegawai  @relation(fields: [pegawaiId], references: [id])
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("pangkat")
+}
+
+model Pegawai {
+  id                String             @id @db.VarChar(18)
+  nipLama           String?            @map("nip_lama") @db.VarChar(20)
+  nama              String             @db.VarChar(100)
+  agama             String?            @db.VarChar(15)
+  tempatLahir       String?            @map("tempat_lahir") @db.VarChar(50)
+  tglLahir          DateTime?          @map("tgl_lahir") @db.Date
+  jenisKelamin      GenderType?        @map("jenis_kelamin")
+  createdAt         DateTime           @default(now()) @map("created_at")
+  updatedAt         DateTime           @updatedAt @map("updated_at")
+  noHp              String?            @map("no_hp") @db.VarChar(50)
+  emailPribadi      String?            @map("email_pribadi") @db.VarChar(100)
+  alamatDesc        String?            @map("alamat_desc") @db.VarChar(200)
+  alamatKota        String?            @map("alamat_kota") @db.VarChar(50)
+  alamatProv        String?            @map("alamat_prov") @db.VarChar(30)
+  alamatKodepos     String?            @map("alamat_kodepos") @db.VarChar(5)
+  createdBy         String             @map("created_by") @db.VarChar(100)
+  updatedBy         String             @map("updated_by") @db.VarChar(100)
+  unitGajiId        String?            @map("unit_gaji_id") @db.VarChar(5)
+  emailUinar        String?            @map("email_uinar") @db.VarChar(50)
+  tmtPensiun        DateTime?          @map("tmt_pensiun") @db.Date
+  tmtKgbYad         DateTime?          @map("tmt_kgb_yad") @db.Date
+  tmtPangkatYad     DateTime?          @map("tmt_pangkat_yad") @db.Date
+  statusAktifId     Int                @map("status_aktif_id") @db.SmallInt
+  statusPegawaiId   Int                @map("status_peg_id") @db.SmallInt
+  statusKawin       String?            @map("status_kawin") @db.VarChar(15)
+  tmtCpns           DateTime?          @map("tmt_cpns") @db.Date
+  usiaPensiun       Int?               @map("usia_pensiun") @db.SmallInt
+  jenisJabatan      JenisJabatanType?  @map("jenis_jabatan")
+  unitRemunId       String?            @map("unit_remun_id") @db.VarChar(5)
+  strukturJabatanId String?            @map("struktur_jabatan_id") @db.Uuid
+  dosen             Dosen?
+  jabatanKemenag    JabatanKemenag[]
+  pangkat           Pangkat[]
+  unitRemun         UnitGaji?          @relation("UnitRemunPegawai", fields: [unitRemunId], references: [id])
+  unitGaji          UnitGaji?          @relation("UnitGajiPegawai", fields: [unitGajiId], references: [id])
+  statusAktif       StatusAktif        @relation(fields: [statusAktifId], references: [id])
+  strukturJabatan   StrukturJabatan?   @relation(fields: [strukturJabatanId], references: [id], onDelete: Restrict)
+  statusPegawai     StatusPegawai      @relation(fields: [statusPegawaiId], references: [id])
+  pendidikan        Pendidikan[]
+  unitKerjaPegawai  UnitKerjaPegawai[]
+
+  @@map("pegawai")
+}
+
+model Pendidikan {
+  id            String   @id @default(uuid()) @db.Uuid
+  namaSekolah   String?  @map("nama_sekolah") @db.VarChar(100)
+  fakultas      String?  @db.VarChar(50)
+  jurusan       String?  @db.VarChar(50)
+  tahunLulus    Int      @map("tahun_lulus") @db.SmallInt
+  jenjang       String?  @db.VarChar(15)
+  lokasiSekolah String?  @map("lokasi_sekolah") @db.VarChar(50)
+  akta          String?  @db.VarChar(50)
+  pegawaiId     String   @map("pegawai_id") @db.VarChar(18)
+  pegawai       Pegawai  @relation(fields: [pegawaiId], references: [id])
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  @@map("pendidikan")
+}
+
+model Posisi {
+  id                 String               @id @db.VarChar(7)
+  nama               String               @unique @db.VarChar(20)
+  kategori           Int                  @db.SmallInt
+  createdBy          String               @map("created_by") @db.VarChar(100)
+  createdAt          DateTime             @default(now()) @map("created_at")
+  updatedBy          String               @map("updated_by") @db.VarChar(100)
+  updatedAt          DateTime             @updatedAt @map("updated_at")
+  strukturOrganisasi StrukturOrganisasi[]
+
+  @@map("posisi")
+}
+
+model Prodi {
+  id         String   @id @default(uuid()) @db.Uuid
+  nama       String   @db.VarChar(50)
+  fakultasId String   @map("fakultas_id") @db.VarChar(5)
+  createdBy  String   @map("created_by") @db.VarChar(100)
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedBy  String   @map("updated_by") @db.VarChar(100)
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  dosen      Dosen[]
+  fakultas   Fakultas @relation(fields: [fakultasId], references: [id])
+
+  @@unique([nama, fakultasId])
+  @@map("prodi")
+}
+
+model StatusAktif {
+  id         Int       @id @db.SmallInt
+  nama       String    @unique @db.VarChar(50)
+  ssoEnabled Boolean   @map("sso_enabled")
+  isActive   Boolean   @default(false) @map("is_active")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  pegawai    Pegawai[]
+
+  @@map("status_aktif")
+}
+
+model StatusPegawai {
+  id          Int       @id @db.SmallInt
+  nama        String    @unique @db.VarChar(15)
+  description String    @db.VarChar(100)
+  isSync      Boolean   @map("is_sync")
+  pegawai     Pegawai[]
+
+  @@map("status_pegawai")
+}
+
+model SubbagUnitKerja {
+  id                 String               @id @default(uuid()) @db.Uuid
+  nama               String               @unique @db.VarChar(100)
+  createdBy          String               @map("created_by") @db.VarChar(100)
+  createdAt          DateTime             @default(now()) @map("created_at")
+  updatedBy          String               @map("updated_by") @db.VarChar(100)
+  updatedAt          DateTime             @updatedAt @map("updated_at")
+  strukturOrganisasi StrukturOrganisasi[]
+
+  @@map("subbag_uker")
+}
+
+model SublevelJabatan {
+  id              String            @id @default(uuid()) @db.Uuid
+  nama            String            @unique @db.VarChar(50)
+  createdBy       String            @map("created_by") @db.VarChar(100)
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedBy       String            @map("updated_by") @db.VarChar(100)
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+  strukturJabatan StrukturJabatan[]
+
+  @@map("sublevel_jabatan")
+}
+
+model UnitGaji {
+  id               String    @id @db.VarChar(5)
+  nama             String    @unique @db.VarChar(50)
+  createdBy        String    @map("created_by") @db.VarChar(100)
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedBy        String    @map("updated_by") @db.VarChar(100)
+  updatedAt        DateTime  @updatedAt @map("updated_at")
+  unitRemunPegawai Pegawai[] @relation("UnitRemunPegawai")
+  unitGajiPegawai  Pegawai[] @relation("UnitGajiPegawai")
+
+  @@map("unit_gaji")
+}
+
+model UnitKerja {
+  id                 String               @id @db.VarChar(5)
+  nama               String               @unique @db.VarChar(100)
+  createdBy          String               @map("created_by") @db.VarChar(100)
+  createdAt          DateTime             @default(now()) @map("created_at")
+  updatedBy          String               @map("updated_by") @db.VarChar(100)
+  updatedAt          DateTime             @updatedAt @map("updated_at")
+  strukturOrganisasi StrukturOrganisasi[]
+
+  @@map("unit_kerja")
+}
+
+model UnitKerjaPegawai {
+  pegawaiId            String             @map("pegawai_id") @db.VarChar(18)
+  strukturOrganisasiId String             @map("struktur_org_id") @db.Uuid
+  isSecondary          Boolean            @default(false) @map("is_secondary")
+  createdBy            String             @map("created_by") @db.VarChar(100)
+  createdAt            DateTime           @default(now()) @map("created_at")
+  updatedBy            String             @map("updated_by") @db.VarChar(100)
+  updatedAt            DateTime           @updatedAt @map("updated_at")
+  pegawai              Pegawai            @relation(fields: [pegawaiId], references: [id])
+  strukturOrganisasi   StrukturOrganisasi @relation(fields: [strukturOrganisasiId], references: [id])
+
+  @@id([strukturOrganisasiId, pegawaiId])
+  @@map("unitkerja_pegawai")
+}
+
+model StrukturOrganisasi {
+  id               String             @id @default(uuid()) @db.Uuid
+  unitKerjaId      String?            @map("uker_id") @db.VarChar(5)
+  bagianId         String?            @map("bag_id") @db.Uuid
+  subbagId         String?            @map("subbag_id") @db.Uuid
+  posisiId         String             @map("posisi_id") @db.VarChar(7)
+  gradeId          String?            @map("grade_id") @db.VarChar(3)
+  createdBy        String             @map("created_by") @db.VarChar(100)
+  createdAt        DateTime           @default(now()) @map("created_at")
+  updatedBy        String             @map("updated_by") @db.VarChar(100)
+  updatedAt        DateTime           @updatedAt @map("updated_at")
+  bagianUnitKerja  BagianUnitKerja?   @relation(fields: [bagianId], references: [id])
+  gradeRemun       GradeRemun?        @relation(fields: [gradeId], references: [id])
+  posisi           Posisi             @relation(fields: [posisiId], references: [id])
+  subbagUnitKerja  SubbagUnitKerja?   @relation(fields: [subbagId], references: [id])
+  unitKerja        UnitKerja?         @relation(fields: [unitKerjaId], references: [id])
+  unitKerjaPegawai UnitKerjaPegawai[]
+
+  @@map("struktur_org")
+}
+
+model SsoRole {
+  code         String         @id @db.VarChar(4)
+  description  String         @db.VarChar(100)
+  LevelJabatan LevelJabatan[]
+
+  @@map("sso_role")
+}
+
+model Consumer {
+  id  String  @id @db.VarChar(12)
+  key String  @db.VarChar(32)
+
+  @@map("consumer")
+}
+
+enum GenderType {
+  L
+  P
+
+  @@map("gender_enum")
+}
+
+enum JenisJabatanType {
+  DT
+  DS
+  Tendik
+
+  @@map("jenis_jabatan_enum")
+}

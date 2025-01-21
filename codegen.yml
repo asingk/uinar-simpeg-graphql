@@ -1,0 +1,26 @@
+# This configuration file tells GraphQL Code Generator how
+# to generate types based on our schema.
+schema: "./schema.graphql"
+generates:
+  # Specify where our generated types should live.
+  ./src/types.ts:
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"
+    config:
+      useIndexSignature: true
+      # More on this below!
+      contextType: "./context#Context"
+      mappers:
+        Pegawai: "./models/simpeg-db#PegawaiModel"
+        StrukturJabatan: "./models/simpeg-db#StrukturJabatanModel"
+        StrukturLevelJabatan: "./models/simpeg-db#StrukturLevelJabatanModel"
+        LevelJabatan: "./models/simpeg-db#LevelJabatanModel"
+        StrukturOrganisasi: "./models/simpeg-db#StrukturOrganisasiModel"
+        JabatanLevel: './models/simpeg-db#JabatanLevelModel'
+#        StrukturUnitKerja: "./models/simpeg-db#StrukturUnitKerjaModel"
+#        StrukturBagianUnitKerja: "./models/simpeg-db#StrukturBagianUnitKerjaModel"
+        Fakultas: "./models/simpeg-db#FakultasModel"
+        Dosen: "./models/simpeg-db#DosenModel"
+        ProdiJabatanDosen: "./models/simpeg-db#ProdiJabatanDosenModel"
+        UnitKerjaPegawai: "./models/simpeg-db#UnitKerjaPegawaiModel"

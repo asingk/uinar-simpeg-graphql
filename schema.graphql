@@ -1,0 +1,500 @@
+scalar Date
+scalar DateTime
+
+type Query {
+    daftarPegawai(filter: PegawaiFilterInput, skip: Int, take: Int, orderBy: PegawaiOrderByInput): DaftarPegawaiResponse!
+    pegawai(id: ID!): Pegawai
+    daftarJabatan: [JabatanLevel!]!
+    jabatan(id: ID!): JabatanLevel
+    levelJabatan(id: ID!): LevelJabatan
+    daftarSublevelJabatan: [SublevelJabatan!]!
+    sublevelJabatan(id: ID!): SublevelJabatan
+    daftarStrukturJabatan(levelId: ID, sublevelId: ID): [StrukturJabatan!]
+    strukturJabatan(id: ID!): StrukturJabatan
+    daftarUnitKerja: [UnitKerja!]!
+    unitKerja(id: ID!): UnitKerja
+    daftarBagianUnitKerja: [BagianUnitKerja!]!
+    bagianUnitKerja(id: ID!, unitKerjaId: ID!): BagianUnitKerja
+    daftarSubbagUnitKerja: [SubbagUnitKerja!]!
+    subbagUnitKerja(id: ID!): SubbagUnitKerja
+    daftarStrukturOrganisasi(unitKerjaId: String, bagianId: ID, subbagId: ID): [StrukturOrganisasi!]
+    daftarUnitGaji: [UnitGaji!]!
+    unitGaji(id: ID!): UnitGaji
+    daftarFakultas: [Fakultas!]!
+    fakultas(id: ID!): Fakultas
+    daftarStatusAktif: [StatusAktif!]!
+    daftarStatusPegawai: [StatusPegawai!]!
+    statusPegawai(id: Int!): StatusPegawai
+    daftarGradeRemun: [GradeRemun!]!
+    gradeRemun(id: ID!): GradeRemun
+    daftarPosisi: [Posisi!]!
+    daftarSsoRole: [SsoRole!]!
+}
+
+type Pegawai {
+    id: ID!
+    nama: String!
+    nipLama: String
+    agama: String
+    tempatLahir: String
+    tglLahir: Date
+    jenisKelamin: String
+    statusKawin: String
+    tmtPensiun: Date
+    usiaPensiun: Int
+    tmtKgbYad: Date
+    tmtPangkatYad: Date
+    statusPegawai: StatusPegawai!
+    alamat: Alamat
+    kontak: Kontak
+    riwayatPendidikan: [Pendidikan!]
+    riwayatPangkat: [Pangkat!]
+    riwayatJabatanKemenag: [JabatanKemenag!]
+    unitGaji: UnitGaji
+    unitRemun: UnitGaji
+    createdBy: String!
+    createdAt: DateTime!
+    updatedBy: String!
+    updatedAt: DateTime!
+    statusAktif: StatusAktif!
+    dosen: Dosen
+    jabatanSaatIni: StrukturJabatan
+    unitKerjaSaatIni: [UnitKerjaPegawai!]
+    jenisJabatan: String
+}
+
+type DaftarPegawaiResponse {
+    id: ID
+    count: Int!
+    pegawai: [Pegawai!]
+}
+
+input PegawaiFilterInput {
+    searchString: String
+    jenisJabatan: [JenisJabatanInput]
+    daftarStatusPegawaiId: [Int]
+    daftarStatusAktifId: [Int]
+}
+
+enum JenisJabatanInput {
+    DS
+    DT
+    Tendik
+}
+
+input PegawaiOrderByInput {
+    id: Sort
+    nama: Sort
+}
+
+enum Sort {
+    asc
+    desc
+}
+
+type StatusPegawai {
+    id: Int!
+    nama: String!
+    description: String
+    isSync: Boolean!
+}
+
+type Alamat {
+    deskripsi: String
+    kabKota: String
+    provinsi: String
+    kodePos: String
+}
+
+type Kontak {
+    noHp: String
+    emailUinar: String
+    emailPribadi: String
+}
+
+type Pendidikan {
+    namaSekolah: String!
+    fakultas: String
+    jurusan: String
+    tahunLulus: Int!
+    jenjang: String!
+    lokasiSekolah: String
+    akta: String
+}
+
+type Pangkat {
+    nama: String!
+    golonganRuang: String!
+    tmt: Date!
+    noSk: String
+    ket: String
+}
+
+type JabatanKemenag {
+    nama: String
+    noSk: String
+    tmt: Date!
+    unitKerja: String
+    bidangStudi: String
+}
+
+type UnitGaji {
+    id: ID!
+    nama: String!
+}
+
+type StatusAktif {
+    id: Int!
+    nama: String!
+    ssoEnabled: Boolean!
+    isActive: Boolean!
+}
+
+type Dosen {
+    nidn: String
+    sintaId: String
+    scopusId: String
+    wosId: String
+    orcidId: String
+    gsId: String
+    prodi: ProdiJabatanDosen
+}
+
+type ProdiJabatanDosen {
+    id: ID!
+    nama: String!
+    fakultas: FakultasJabatanDosen!
+}
+
+type FakultasJabatanDosen {
+    id: String!
+    nama: String!
+}
+
+type StrukturJabatan {
+    id: ID!
+    level: LevelJabatan!
+    sublevel: SublevelJabatan
+    grade: GradeRemun
+}
+
+type Jabatan {
+    id: ID!
+    nama: String!
+}
+
+type LevelJabatan {
+    id: String!
+    nama: String!
+    ssoRole: SsoRole!
+    jabatan: Jabatan!
+}
+
+type SublevelJabatan {
+    id:String!
+    nama: String!
+}
+
+type GradeRemun {
+    id: String!
+    remun: Int!
+}
+
+type UnitKerjaPegawai {
+    id: ID!
+    unitKerja: UnitKerja
+    bagian: BagianUnitKerja
+    subbag: SubbagUnitKerja
+    posisi: Posisi!
+    grade: GradeRemun
+    isSecondary: Boolean!
+}
+
+type StrukturOrganisasi {
+    id: ID!
+    unitKerja: UnitKerja
+    bagian: BagianUnitKerja
+    subbag: SubbagUnitKerja
+    posisi: Posisi!
+    grade: GradeRemun
+    pegawai: [Pegawai!]
+}
+
+type UnitKerja {
+    id: ID!
+    nama: String!
+}
+
+type BagianUnitKerja {
+    id: String!
+    nama: String!
+}
+
+type SubbagUnitKerja {
+    id: String!
+    nama: String!
+}
+
+type Posisi {
+    id: ID!
+    nama: String!
+    kategori: Int!
+}
+
+type JabatanLevel {
+    id: ID!
+    nama: String!
+    level: [StrukturLevelJabatan!]!
+}
+
+type StrukturLevelJabatan {
+    id: ID!
+    nama: String!
+    ssoRole: SsoRole!
+}
+
+type Fakultas {
+    id: ID!
+    nama: String!
+    prodi: [Prodi!]
+}
+
+type Prodi {
+    id: String!
+    nama: String!
+}
+
+type SsoRole {
+    code: ID!
+    description: String!
+}
+
+type Mutation {
+    createPegawaiSync(input: CreatePegawaiSyncInput): MutationPegawaiResponse!
+    createPegawaiNotSync(input: CreatePegawaiNotSyncInput): MutationPegawaiResponse!
+    syncAsn(id: ID!): MutationPegawaiResponse!
+    updatePegawaiProfil(id: ID!, input: UpdatePegawaiProfilInput!): MutationPegawaiResponse!
+    deletePegawai(id: ID!): MutationPegawaiResponse!
+    createJabatanPegawai(pegawaiId: ID!, strukturJabatanId: ID!): MutationPegawaiResponse!
+    deleteJabatanPegawai(pegawaiId: ID!, strukturJabatanId: ID!): MutationPegawaiResponse!
+    createUnitKerjaPegawai(pegawaiId: ID!, strukturOrganisasiId: ID!, isSecondary: Boolean!): MutationPegawaiResponse!
+    updateUnitKerjaPegawai(pegawaiId: ID!, strukturOrganisasiId: ID!, isSecondary: Boolean!): MutationPegawaiResponse!
+    deleteUnitKerjaPegawai(pegawaiId: ID!, strukturOrganisasiId: ID!): MutationPegawaiResponse!
+    createGradeRemun(id: ID!, remun: Int!): MutationGradeRemunResponse!
+    updateGradeRemun(id: ID!, remun: Int!): MutationGradeRemunResponse!
+    deleteGradeRemun(id: ID!): MutationGradeRemunResponse!
+    createLeveljabatan(nama: String!, jabatanId: ID!, ssoRole: ID!): MutationLevelJabatanResponse!
+    updateLevelJabatan(id: ID!, nama: String!, ssoRole: ID!): MutationLevelJabatanResponse!
+    deleteLevelJabatan(id: ID!): MutationLevelJabatanResponse!
+    createSubLevelJabatan(nama: String!): MutationSublevelJabatanResponse!
+    updateSublevelJabatan(id: ID!, nama: String!): MutationSublevelJabatanResponse!
+    deleteSubLevelJabatan(id: ID!): MutationSublevelJabatanResponse!
+    createStrukturJabatan(input: CreateStrukturJabatanInput) : MutationStrukturJabatanResponse!
+    updateStrukturJabatan(id: ID!, grade: ID!): MutationStrukturJabatanResponse!
+    deleteStrukturJabatan(id: ID!): MutationStrukturJabatanResponse!
+    createPosisi(id: ID!, nama: String!, kategori: Int!): MutationPosisiResponse!
+    updatePosisi(id: ID!, nama: String!): MutationPosisiResponse!
+    deletePosisi(id: ID!): MutationPosisiResponse!
+    createUnitKerja(id: ID!, nama: String!): MutationUnitKerjaResponse!
+    updateUnitKerja(id: ID!, nama: String!): MutationUnitKerjaResponse!
+    deleteUnitKerja(id: ID!): MutationUnitKerjaResponse!
+    createBagianUnitKerja(nama: String!): MutationBagianUnitKerjaResponse!
+    updateBagianUnitKerja(id: ID!, nama: String!): MutationBagianUnitKerjaResponse!
+    deleteBagianUnitKerja(id: ID!): MutationBagianUnitKerjaResponse!
+    createSubbagUnitKerja(nama: String!): MutationSubbagUnitKerjaResponse!
+    updateSubbagUnitKerja(id: ID!, nama: String!): MutationSubbagUnitKerjaResponse!
+    deleteSubbagUnitKerja(id: ID!): MutationSubbagUnitKerjaResponse!
+    createStrukturOrganisasi(input: CreateStrukturOrganisasiInput!): MutationStrukturOrganisasiResponse!
+    updateStrukturOrganisasi(id: ID!, grade: ID!): MutationStrukturOrganisasiResponse!
+    deleteStrukturOrganisasi(id: ID!): MutationStrukturOrganisasiResponse!
+    upsertDosen(pegawaiId: ID!, input: UpsertDosenInput): MutationPegawaiResponse!
+    updatePegawaiStatusPegawai(id: ID!, statusPegawaiId: Int!): MutationPegawaiResponse!
+    updatePegawaiStatusAktif(id: ID!, statusAktifId: Int!): MutationPegawaiResponse!
+    createFakultas(id: ID!, nama: String!): MutationFakultasResponse!
+    updateFakultas(id: ID!, nama: String!): MutationFakultasResponse!
+    deleteFakultas(id: ID!): MutationFakultasResponse!
+    createProdi(fakultasId: ID!, nama: String!): MutationProdiResponse!
+    updateProdi(id: ID!, nama: String!): MutationProdiResponse!
+    deleteProdi(id: ID!): MutationProdiResponse!
+    createUnitGaji(id: ID!, nama: String!): MutationUnitGajiResponse!
+    updateUnitGaji(id: ID!, nama: String!): MutationUnitGajiResponse!
+    deleteUnitGaji(id: ID!): MutationUnitGajiResponse!
+    createStatusAktif(id: Int!, nama: String!, ssoEnabled: Boolean!, isActive: Boolean!): MutationStatusAktifResponse!
+    updateStatusAktif(id: Int!, nama: String!, ssoEnabled: Boolean!, isActive: Boolean!): MutationStatusAktifResponse!
+    deleteStatusAktif(id: Int!): MutationStatusAktifResponse!
+}
+
+input CreatePegawaiSyncInput {
+    id: ID!
+    password: String!
+    strukturJabatanId: ID!
+    strukturOrganisasiId: ID
+    unitGajiId: ID!
+    unitRemunId: ID!
+    prodiId: String
+}
+
+input CreatePegawaiNotSyncInput {
+    id: ID!
+    nama: String!
+    gelarDepan: String
+    gelarBelakang: String
+    password: String!
+    strukturJabatanId: ID!
+    strukturOrganisasiId: ID
+    unitGajiId: ID!
+    unitRemunId: ID!
+    statusPegawaiId: Int!
+    prodiId: String
+}
+
+interface MutationResponse {
+    "Similar to HTTP status code, represents the status of the mutation"
+    code: Int!
+    "Indicates whether the mutation was successful"
+    success: Boolean!
+    "human-readable message for UI"
+    message: String!
+}
+
+type MutationPegawaiResponse implements MutationResponse{
+    code : Int!
+    success: Boolean!
+    message: String!
+    "Newly updated pegawai after a successful mutation"
+    pegawai: Pegawai
+}
+
+input UpdatePegawaiProfilInput {
+    nama: String
+    agama: String
+    tempatLahir: String
+    tglLahir: Date
+    jenisKelamin: JenisKelaminEnum
+    statusKawin: String
+    noHp: String
+    emailPribadi: String
+    unitGajiId: String!
+    emailUinar: String
+    unitRemunId: String!
+}
+
+enum JenisKelaminEnum {
+    L
+    P
+}
+
+type MutationGradeRemunResponse implements MutationResponse {
+    code : Int!
+    success: Boolean!
+    message: String!
+    gradeRemun: GradeRemun
+}
+
+type MutationLevelJabatanResponse implements MutationResponse {
+    code : Int!
+    success: Boolean!
+    message: String!
+    level: LevelJabatan
+}
+
+type MutationSublevelJabatanResponse implements MutationResponse {
+    code : Int!
+    success: Boolean!
+    message: String!
+    sublevel: SublevelJabatan
+}
+
+type MutationStrukturJabatanResponse implements MutationResponse {
+    code : Int!
+    success: Boolean!
+    message: String!
+    strukturJabatan: StrukturJabatan
+}
+
+input CreateStrukturJabatanInput {
+    levelId: String!
+    sublevelId: String
+    grade: String
+}
+
+type MutationPosisiResponse implements MutationResponse {
+    code : Int!
+    success: Boolean!
+    message: String!
+    posisi: Posisi
+}
+
+type MutationUnitKerjaResponse implements MutationResponse {
+    code : Int!
+    success: Boolean!
+    message: String!
+    unitKerja: UnitKerja
+}
+
+type MutationBagianUnitKerjaResponse implements MutationResponse {
+    code : Int!
+    success: Boolean!
+    message: String!
+    bagian: BagianUnitKerja
+}
+
+type MutationSubbagUnitKerjaResponse implements MutationResponse {
+    code : Int!
+    success: Boolean!
+    message: String!
+    subbag: SubbagUnitKerja
+}
+
+input CreateStrukturOrganisasiInput {
+    unitKerjaId: String
+    bagianId: String
+    subbagId: String
+    grade: String
+    posisiId: String!
+}
+
+type MutationStrukturOrganisasiResponse implements MutationResponse {
+    code : Int!
+    success: Boolean!
+    message: String!
+    strukturOrganisasi: StrukturOrganisasi
+}
+
+input UpsertDosenInput {
+    prodiId: String
+    nidn: String
+    sintaId: String
+    scopusId: String
+    wosId: String
+    orcidId: String
+    gsId: String
+}
+
+type MutationFakultasResponse implements MutationResponse {
+    code : Int!
+    success: Boolean!
+    message: String!
+    fakultas: Fakultas
+}
+
+type MutationProdiResponse implements MutationResponse {
+    code : Int!
+    success: Boolean!
+    message: String!
+    prodi: Prodi
+}
+
+type MutationUnitGajiResponse implements MutationResponse {
+    code : Int!
+    success: Boolean!
+    message: String!
+    unitGaji: UnitGaji
+}
+
+type MutationStatusAktifResponse implements MutationResponse {
+    code : Int!
+    success: Boolean!
+    message: String!
+    statusAktif: StatusAktif
+}
