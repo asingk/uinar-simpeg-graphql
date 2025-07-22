@@ -84,8 +84,8 @@ model JabatanKemenag {
   unitKerja   String?  @map("unit_kerja") @db.VarChar(250)
   pegawaiId   String   @map("pegawai_id") @db.VarChar(18)
   bidangStudi String?  @map("bidang_studi") @db.VarChar(100)
-  pegawai     Pegawai  @relation(fields: [pegawaiId], references: [id])
   createdAt   DateTime @default(now()) @map("created_at")
+  pegawai     Pegawai  @relation(fields: [pegawaiId], references: [id])
 
   @@map("jabatan_kemenag")
 }
@@ -99,10 +99,10 @@ model StrukturJabatan {
   createdAt         DateTime         @default(now()) @map("created_at")
   updatedBy         String           @map("updated_by") @db.VarChar(100)
   updatedAt         DateTime         @updatedAt @map("updated_at")
+  pegawai           Pegawai[]
+  gradeRemun        GradeRemun?      @relation(fields: [gradeId], references: [id])
   levelJabatan      LevelJabatan     @relation(fields: [levelJabatanId], references: [id])
   sublevelJabatan   SublevelJabatan? @relation(fields: [sublevelJabatanId], references: [id])
-  gradeRemun        GradeRemun?      @relation(fields: [gradeId], references: [id])
-  pegawai           Pegawai[]
 
   @@map("struktur_jabatan")
 }
@@ -116,9 +116,9 @@ model LevelJabatan {
   updatedAt       DateTime          @updatedAt @map("updated_at")
   jabatanId       String            @map("jabatan_id") @db.VarChar(3)
   ssoRoleCode     String            @map("sso_role_code") @db.VarChar(4)
-  strukturJabatan StrukturJabatan[]
   jabatan         Jabatan           @relation(fields: [jabatanId], references: [id])
   ssoRole         SsoRole           @relation(fields: [ssoRoleCode], references: [code])
+  strukturJabatan StrukturJabatan[]
 
   @@map("level_jabatan")
 }
@@ -131,8 +131,8 @@ model Pangkat {
   tmt           DateTime @db.Date
   ket           String?  @db.VarChar(100)
   pegawaiId     String   @map("pegawai_id") @db.VarChar(18)
-  pegawai       Pegawai  @relation(fields: [pegawaiId], references: [id])
   createdAt     DateTime @default(now()) @map("created_at")
+  pegawai       Pegawai  @relation(fields: [pegawaiId], references: [id])
 
   @@map("pangkat")
 }
@@ -171,11 +171,11 @@ model Pegawai {
   dosen             Dosen?
   jabatanKemenag    JabatanKemenag[]
   pangkat           Pangkat[]
-  unitRemun         UnitGaji?          @relation("UnitRemunPegawai", fields: [unitRemunId], references: [id])
-  unitGaji          UnitGaji?          @relation("UnitGajiPegawai", fields: [unitGajiId], references: [id])
   statusAktif       StatusAktif        @relation(fields: [statusAktifId], references: [id])
-  strukturJabatan   StrukturJabatan?   @relation(fields: [strukturJabatanId], references: [id], onDelete: Restrict)
   statusPegawai     StatusPegawai      @relation(fields: [statusPegawaiId], references: [id])
+  strukturJabatan   StrukturJabatan?   @relation(fields: [strukturJabatanId], references: [id], onDelete: Restrict)
+  unitGaji          UnitGaji?          @relation("UnitGajiPegawai", fields: [unitGajiId], references: [id])
+  unitRemun         UnitGaji?          @relation("UnitRemunPegawai", fields: [unitRemunId], references: [id])
   pendidikan        Pendidikan[]
   unitKerjaPegawai  UnitKerjaPegawai[]
 
@@ -188,12 +188,12 @@ model Pendidikan {
   fakultas      String?  @db.VarChar(50)
   jurusan       String?  @db.VarChar(50)
   tahunLulus    Int      @map("tahun_lulus") @db.SmallInt
-  jenjang       String?  @db.VarChar(15)
+  jenjang       String?  @db.VarChar(50)
   lokasiSekolah String?  @map("lokasi_sekolah") @db.VarChar(50)
   akta          String?  @db.VarChar(50)
   pegawaiId     String   @map("pegawai_id") @db.VarChar(18)
-  pegawai       Pegawai  @relation(fields: [pegawaiId], references: [id])
   createdAt     DateTime @default(now()) @map("created_at")
+  pegawai       Pegawai  @relation(fields: [pegawaiId], references: [id])
 
   @@map("pendidikan")
 }
@@ -279,8 +279,8 @@ model UnitGaji {
   createdAt        DateTime  @default(now()) @map("created_at")
   updatedBy        String    @map("updated_by") @db.VarChar(100)
   updatedAt        DateTime  @updatedAt @map("updated_at")
-  unitRemunPegawai Pegawai[] @relation("UnitRemunPegawai")
   unitGajiPegawai  Pegawai[] @relation("UnitGajiPegawai")
+  unitRemunPegawai Pegawai[] @relation("UnitRemunPegawai")
 
   @@map("unit_gaji")
 }
@@ -342,8 +342,8 @@ model SsoRole {
 }
 
 model Consumer {
-  id  String  @id @db.VarChar(12)
-  key String  @db.VarChar(32)
+  id  String @id @db.VarChar(12)
+  key String @db.VarChar(32)
 
   @@map("consumer")
 }
