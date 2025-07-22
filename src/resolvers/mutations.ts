@@ -2799,11 +2799,15 @@ const castPegawaiRopeg = (dataProfil) => {
     dataParam.nipLama = dataProfil.NIP
     dataParam.agama = dataProfil.AGAMA
     dataParam.tempatLahir = dataProfil.TEMPAT_LAHIR
-    dataParam.tglLahir = new Date(dataProfil.TANGGAL_LAHIR)
+    dataParam.tglLahir = new Date(dataProfil.TANGGAL_LAHIR.split(" ")[0])
     dataParam.emailPribadi = dataProfil.EMAIL
     dataParam.noHp = dataProfil.TELEPON
-    if (dataProfil.ALAMAT_1 || dataProfil.ALAMAT_2) {
+    if (dataProfil.ALAMAT_1 && dataProfil.ALAMAT_2) {
         dataParam.alamatDesc = dataProfil.ALAMAT_1 + dataProfil.ALAMAT_2
+    } else if (dataProfil.ALAMAT_1) {
+        dataParam.alamatDesc = dataProfil.ALAMAT_1
+    } else if (dataProfil.ALAMAT_2) {
+        dataParam.alamatDesc = dataProfil.ALAMAT_2
     }
     switch (dataProfil.JENIS_KELAMIN) {
         case 0:
