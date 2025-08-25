@@ -2,13 +2,14 @@ export type PegawaiModel = {
     id: string
     nama: string
     nipLama: string
+    nik: string
+    nuptk: string
     agama: string
     tempatLahir: string
     tglLahir: Date
     jenisKelamin: string
     statusKawin: string
     tmtPensiun: Date
-    usiaPensiun: number
     tmtKgbYad: Date
     statusPegawaiId: number
     alamatDesc: string
