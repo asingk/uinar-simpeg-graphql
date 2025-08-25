@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "dosen" ALTER COLUMN "nuptk" SET DATA TYPE VARCHAR(16);
