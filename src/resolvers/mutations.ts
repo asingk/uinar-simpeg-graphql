@@ -2092,7 +2092,6 @@ const mutations: MutationResolvers = {
                                         id: input.prodiId,
                                     }
                                 },
-                                nidn: input.nidn,
                                 orcidId: input.orcidId,
                                 sintaId: input.sintaId,
                                 scopusId: input.scopusId,
@@ -2106,7 +2105,6 @@ const mutations: MutationResolvers = {
                                         id: input.prodiId,
                                     }
                                 },
-                                nidn: input.nidn,
                                 orcidId: input.orcidId,
                                 sintaId: input.sintaId,
                                 scopusId: input.scopusId,
@@ -2525,7 +2523,7 @@ const mutations: MutationResolvers = {
         }
     },
 
-    async createStatusAktif(_, {id, nama, ssoEnabled, isActive}, {dataSources, user}){
+    async createStatusAktif(_, {nama, ssoEnabled, isActive}, {dataSources, user}){
         if (!user) {
             throw new GraphQLError('User is not authenticated', {
                 extensions: {
@@ -2537,7 +2535,6 @@ const mutations: MutationResolvers = {
         try {
             const statusAktif = await dataSources.prisma.statusAktif.create({
                 data: {
-                    id,
                     nama,
                     ssoEnabled,
                     isActive,
@@ -2830,7 +2827,6 @@ const castPegawaiRopeg = (dataProfil) => {
     dataParam.tmtKgbYad = new Date(dataProfil.tmt_kgb_yad)
     dataParam.tmtPangkatYad = new Date(dataProfil.tmt_pangkat_yad)
     dataParam.tmtPensiun = new Date(dataProfil.TMT_PENSIUN)
-    dataParam.usiaPensiun = dataProfil.USIA_PENSIUN
     dataParam.statusKawin = dataProfil.STATUS_KAWIN
     return dataParam
 }

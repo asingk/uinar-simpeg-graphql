@@ -35,13 +35,14 @@ type Pegawai {
     id: ID!
     nama: String!
     nipLama: String
+    nik: String
+    nuptk: String
     agama: String
     tempatLahir: String
     tglLahir: Date
     jenisKelamin: String
     statusKawin: String
     tmtPensiun: Date
-    usiaPensiun: Int
     tmtKgbYad: Date
     tmtPangkatYad: Date
     statusPegawai: StatusPegawai!
@@ -319,7 +320,7 @@ type Mutation {
     createUnitGaji(id: ID!, nama: String!): MutationUnitGajiResponse!
     updateUnitGaji(id: ID!, nama: String!): MutationUnitGajiResponse!
     deleteUnitGaji(id: ID!): MutationUnitGajiResponse!
-    createStatusAktif(id: Int!, nama: String!, ssoEnabled: Boolean!, isActive: Boolean!): MutationStatusAktifResponse!
+    createStatusAktif(nama: String!, ssoEnabled: Boolean!, isActive: Boolean!): MutationStatusAktifResponse!
     updateStatusAktif(id: Int!, nama: String!, ssoEnabled: Boolean!, isActive: Boolean!): MutationStatusAktifResponse!
     deleteStatusAktif(id: Int!): MutationStatusAktifResponse!
 }
@@ -463,7 +464,6 @@ type MutationStrukturOrganisasiResponse implements MutationResponse {
 
 input UpsertDosenInput {
     prodiId: String
-    nidn: String
     sintaId: String
     scopusId: String
     wosId: String

@@ -269,7 +269,6 @@ export type MutationCreateProdiArgs = {
 
 
 export type MutationCreateStatusAktifArgs = {
-  id: Scalars['Int']['input'];
   isActive: Scalars['Boolean']['input'];
   nama: Scalars['String']['input'];
   ssoEnabled: Scalars['Boolean']['input'];
@@ -657,7 +656,9 @@ export type Pegawai = {
   jenisKelamin?: Maybe<Scalars['String']['output']>;
   kontak?: Maybe<Kontak>;
   nama: Scalars['String']['output'];
+  nik?: Maybe<Scalars['String']['output']>;
   nipLama?: Maybe<Scalars['String']['output']>;
+  nuptk?: Maybe<Scalars['String']['output']>;
   riwayatJabatanKemenag?: Maybe<Array<JabatanKemenag>>;
   riwayatPangkat?: Maybe<Array<Pangkat>>;
   riwayatPendidikan?: Maybe<Array<Pendidikan>>;
@@ -674,7 +675,6 @@ export type Pegawai = {
   unitRemun?: Maybe<UnitGaji>;
   updatedAt: Scalars['DateTime']['output'];
   updatedBy: Scalars['String']['output'];
-  usiaPensiun?: Maybe<Scalars['Int']['output']>;
 };
 
 export type PegawaiFilterInput = {
@@ -937,7 +937,6 @@ export type UpdatePegawaiProfilInput = {
 
 export type UpsertDosenInput = {
   gsId?: InputMaybe<Scalars['String']['input']>;
-  nidn?: InputMaybe<Scalars['String']['input']>;
   orcidId?: InputMaybe<Scalars['String']['input']>;
   prodiId?: InputMaybe<Scalars['String']['input']>;
   scopusId?: InputMaybe<Scalars['String']['input']>;
@@ -1256,7 +1255,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   createPegawaiSync?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, Partial<MutationCreatePegawaiSyncArgs>>;
   createPosisi?: Resolver<ResolversTypes['MutationPosisiResponse'], ParentType, ContextType, RequireFields<MutationCreatePosisiArgs, 'id' | 'kategori' | 'nama'>>;
   createProdi?: Resolver<ResolversTypes['MutationProdiResponse'], ParentType, ContextType, RequireFields<MutationCreateProdiArgs, 'fakultasId' | 'nama'>>;
-  createStatusAktif?: Resolver<ResolversTypes['MutationStatusAktifResponse'], ParentType, ContextType, RequireFields<MutationCreateStatusAktifArgs, 'id' | 'isActive' | 'nama' | 'ssoEnabled'>>;
+  createStatusAktif?: Resolver<ResolversTypes['MutationStatusAktifResponse'], ParentType, ContextType, RequireFields<MutationCreateStatusAktifArgs, 'isActive' | 'nama' | 'ssoEnabled'>>;
   createStrukturJabatan?: Resolver<ResolversTypes['MutationStrukturJabatanResponse'], ParentType, ContextType, Partial<MutationCreateStrukturJabatanArgs>>;
   createStrukturOrganisasi?: Resolver<ResolversTypes['MutationStrukturOrganisasiResponse'], ParentType, ContextType, RequireFields<MutationCreateStrukturOrganisasiArgs, 'input'>>;
   createSubLevelJabatan?: Resolver<ResolversTypes['MutationSublevelJabatanResponse'], ParentType, ContextType, RequireFields<MutationCreateSubLevelJabatanArgs, 'nama'>>;
@@ -1441,7 +1440,9 @@ export type PegawaiResolvers<ContextType = Context, ParentType extends Resolvers
   jenisKelamin?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   kontak?: Resolver<Maybe<ResolversTypes['Kontak']>, ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  nik?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   nipLama?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  nuptk?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   riwayatJabatanKemenag?: Resolver<Maybe<Array<ResolversTypes['JabatanKemenag']>>, ParentType, ContextType>;
   riwayatPangkat?: Resolver<Maybe<Array<ResolversTypes['Pangkat']>>, ParentType, ContextType>;
   riwayatPendidikan?: Resolver<Maybe<Array<ResolversTypes['Pendidikan']>>, ParentType, ContextType>;
@@ -1458,7 +1459,6 @@ export type PegawaiResolvers<ContextType = Context, ParentType extends Resolvers
   unitRemun?: Resolver<Maybe<ResolversTypes['UnitGaji']>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   updatedBy?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  usiaPensiun?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

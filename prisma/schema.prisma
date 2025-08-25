@@ -164,7 +164,8 @@ model Pegawai {
   statusPegawaiId   Int                @map("status_peg_id") @db.SmallInt
   statusKawin       String?            @map("status_kawin") @db.VarChar(15)
   tmtCpns           DateTime?          @map("tmt_cpns") @db.Date
-  usiaPensiun       Int?               @map("usia_pensiun") @db.SmallInt
+  nik               String?            @map("nik") @db.VarChar(16)
+  nuptk             String?            @db.VarChar(16)
   jenisJabatan      JenisJabatanType?  @map("jenis_jabatan")
   unitRemunId       String?            @map("unit_remun_id") @db.VarChar(5)
   strukturJabatanId String?            @map("struktur_jabatan_id") @db.Uuid
@@ -227,7 +228,7 @@ model Prodi {
 }
 
 model StatusAktif {
-  id         Int       @id @db.SmallInt
+  id         Int       @id @default(autoincrement()) @db.SmallInt
   nama       String    @unique @db.VarChar(50)
   ssoEnabled Boolean   @map("sso_enabled")
   isActive   Boolean   @default(false) @map("is_active")
