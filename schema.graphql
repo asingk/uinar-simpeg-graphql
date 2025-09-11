@@ -101,7 +101,8 @@ type StatusPegawai {
 }
 
 type Alamat {
-    deskripsi: String
+    deskripsi1: String
+    deskripsi2: String
     kabKota: String
     provinsi: String
     kodePos: String
@@ -142,6 +143,7 @@ type JabatanKemenag {
 type UnitGaji {
     id: ID!
     nama: String!
+    kodeAnakSatker: String!
 }
 
 type StatusAktif {
@@ -159,6 +161,10 @@ type Dosen {
     orcidId: String
     gsId: String
     prodi: ProdiJabatanDosen
+    serdosBidangStudi: String
+    serdosSkSertifikat: String
+    serdosNoRegistrasi: String
+    serdosTahunSertifikasi: Int
 }
 
 type ProdiJabatanDosen {
@@ -317,8 +323,8 @@ type Mutation {
     createProdi(fakultasId: ID!, nama: String!): MutationProdiResponse!
     updateProdi(id: ID!, nama: String!): MutationProdiResponse!
     deleteProdi(id: ID!): MutationProdiResponse!
-    createUnitGaji(id: ID!, nama: String!): MutationUnitGajiResponse!
-    updateUnitGaji(id: ID!, nama: String!): MutationUnitGajiResponse!
+    createUnitGaji(id: ID!, nama: String!, kodeAnakSatker: String!): MutationUnitGajiResponse!
+    updateUnitGaji(id: ID!, nama: String!, kodeAnakSatker: String!): MutationUnitGajiResponse!
     deleteUnitGaji(id: ID!): MutationUnitGajiResponse!
     createStatusAktif(nama: String!, ssoEnabled: Boolean!, isActive: Boolean!): MutationStatusAktifResponse!
     updateStatusAktif(id: Int!, nama: String!, ssoEnabled: Boolean!, isActive: Boolean!): MutationStatusAktifResponse!
