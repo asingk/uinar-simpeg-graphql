@@ -12,7 +12,8 @@ export type PegawaiModel = {
     tmtPensiun: Date
     tmtKgbYad: Date
     statusPegawaiId: number
-    alamatDesc: string
+    alamatDesc1: string
+    alamatDesc2: string
     alamatKota: string
     alamatProv: string
     alamatKodepos: string
@@ -79,6 +80,10 @@ export type DosenModel = {
     orcidId: string
     nidn: string
     sintaId: string
+    serdosBidangStudi: string
+    serdosSkSertifikat: string
+    serdosNoRegistrasi: string
+    serdosTahunSertifikasi: number
 }
 
 export type ProdiJabatanDosenModel = {
