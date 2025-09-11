@@ -2423,7 +2423,7 @@ const mutations: MutationResolvers = {
         }
     },
 
-    async createUnitGaji(_, {id, nama}, {dataSources, user}){
+    async createUnitGaji(_, {id, nama, kodeAnakSatker}, {dataSources, user}){
         if (!user) {
             throw new GraphQLError('User is not authenticated', {
                 extensions: {
@@ -2437,6 +2437,7 @@ const mutations: MutationResolvers = {
                 data: {
                     id,
                     nama,
+                    kodeAnakSatker,
                     createdBy: user,
                     updatedBy: user,
                 },
@@ -2457,7 +2458,7 @@ const mutations: MutationResolvers = {
         }
     },
 
-    async updateUnitGaji(_, {id, nama}, {dataSources, user}){
+    async updateUnitGaji(_, {id, nama, kodeAnakSatker}, {dataSources, user}){
         if (!user) {
             throw new GraphQLError('User is not authenticated', {
                 extensions: {
@@ -2473,6 +2474,7 @@ const mutations: MutationResolvers = {
                 },
                 data: {
                     nama,
+                    kodeAnakSatker,
                     updatedBy: user,
                 },
             })
@@ -2799,13 +2801,15 @@ const castPegawaiRopeg = (dataProfil) => {
     dataParam.tglLahir = new Date(dataProfil.TANGGAL_LAHIR.split(" ")[0])
     dataParam.emailPribadi = dataProfil.EMAIL
     dataParam.noHp = dataProfil.TELEPON
-    if (dataProfil.ALAMAT_1 && dataProfil.ALAMAT_2) {
-        dataParam.alamatDesc = dataProfil.ALAMAT_1 + dataProfil.ALAMAT_2
-    } else if (dataProfil.ALAMAT_1) {
-        dataParam.alamatDesc = dataProfil.ALAMAT_1
-    } else if (dataProfil.ALAMAT_2) {
-        dataParam.alamatDesc = dataProfil.ALAMAT_2
-    }
+    dataParam.alamatDesc1 = dataProfil.ALAMAT_1
+    dataParam.alamatDesc2 = dataProfil.ALAMAT_2
+    // if (dataProfil.ALAMAT_1 && dataProfil.ALAMAT_2) {
+    //     dataParam.alamatDesc = dataProfil.ALAMAT_1 + dataProfil.ALAMAT_2
+    // } else if (dataProfil.ALAMAT_1) {
+    //     dataParam.alamatDesc = dataProfil.ALAMAT_1
+    // } else if (dataProfil.ALAMAT_2) {
+    //     dataParam.alamatDesc = dataProfil.ALAMAT_2
+    // }
     switch (dataProfil.JENIS_KELAMIN) {
         case 0:
             dataParam.jenisKelamin = 'P'
