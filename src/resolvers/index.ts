@@ -18,9 +18,10 @@ const resolvers: Resolvers = {
             }).statusPegawai()
         },
         alamat: (parent, _, __) => {
-            if(parent.alamatDesc || parent.alamatKota || parent.alamatProv || parent.alamatKodepos) {
+            if(parent.alamatDesc1 || parent.alamatDesc2 || parent.alamatKota || parent.alamatProv || parent.alamatKodepos) {
                 return {
-                    deskripsi: parent.alamatDesc,
+                    deskripsi1: parent.alamatDesc1,
+                    deskripsi2: parent.alamatDesc2,
                     kabKota: parent.alamatKota,
                     provinsi: parent.alamatProv,
                     kodePos: parent.alamatKodepos
