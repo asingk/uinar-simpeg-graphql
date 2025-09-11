@@ -23,7 +23,8 @@ export type Scalars = {
 
 export type Alamat = {
   __typename?: 'Alamat';
-  deskripsi?: Maybe<Scalars['String']['output']>;
+  deskripsi1?: Maybe<Scalars['String']['output']>;
+  deskripsi2?: Maybe<Scalars['String']['output']>;
   kabKota?: Maybe<Scalars['String']['output']>;
   kodePos?: Maybe<Scalars['String']['output']>;
   provinsi?: Maybe<Scalars['String']['output']>;
@@ -87,6 +88,10 @@ export type Dosen = {
   orcidId?: Maybe<Scalars['String']['output']>;
   prodi?: Maybe<ProdiJabatanDosen>;
   scopusId?: Maybe<Scalars['String']['output']>;
+  serdosBidangStudi?: Maybe<Scalars['String']['output']>;
+  serdosNoRegistrasi?: Maybe<Scalars['String']['output']>;
+  serdosSkSertifikat?: Maybe<Scalars['String']['output']>;
+  serdosTahunSertifikasi?: Maybe<Scalars['Int']['output']>;
   sintaId?: Maybe<Scalars['String']['output']>;
   wosId?: Maybe<Scalars['String']['output']>;
 };
@@ -297,6 +302,7 @@ export type MutationCreateSubbagUnitKerjaArgs = {
 
 export type MutationCreateUnitGajiArgs = {
   id: Scalars['ID']['input'];
+  kodeAnakSatker: Scalars['String']['input'];
   nama: Scalars['String']['input'];
 };
 
@@ -490,6 +496,7 @@ export type MutationUpdateSublevelJabatanArgs = {
 
 export type MutationUpdateUnitGajiArgs = {
   id: Scalars['ID']['input'];
+  kodeAnakSatker: Scalars['String']['input'];
   nama: Scalars['String']['input'];
 };
 
@@ -901,6 +908,7 @@ export type SublevelJabatan = {
 export type UnitGaji = {
   __typename?: 'UnitGaji';
   id: Scalars['ID']['output'];
+  kodeAnakSatker: Scalars['String']['output'];
   nama: Scalars['String']['output'];
 };
 
@@ -1150,7 +1158,8 @@ export type ResolversParentTypes = ResolversObject<{
 }>;
 
 export type AlamatResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Alamat'] = ResolversParentTypes['Alamat']> = ResolversObject<{
-  deskripsi?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  deskripsi1?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  deskripsi2?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   kabKota?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   kodePos?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   provinsi?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -1184,6 +1193,10 @@ export type DosenResolvers<ContextType = Context, ParentType extends ResolversPa
   orcidId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   prodi?: Resolver<Maybe<ResolversTypes['ProdiJabatanDosen']>, ParentType, ContextType>;
   scopusId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  serdosBidangStudi?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  serdosNoRegistrasi?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  serdosSkSertifikat?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  serdosTahunSertifikasi?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   sintaId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   wosId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -1260,7 +1273,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   createStrukturOrganisasi?: Resolver<ResolversTypes['MutationStrukturOrganisasiResponse'], ParentType, ContextType, RequireFields<MutationCreateStrukturOrganisasiArgs, 'input'>>;
   createSubLevelJabatan?: Resolver<ResolversTypes['MutationSublevelJabatanResponse'], ParentType, ContextType, RequireFields<MutationCreateSubLevelJabatanArgs, 'nama'>>;
   createSubbagUnitKerja?: Resolver<ResolversTypes['MutationSubbagUnitKerjaResponse'], ParentType, ContextType, RequireFields<MutationCreateSubbagUnitKerjaArgs, 'nama'>>;
-  createUnitGaji?: Resolver<ResolversTypes['MutationUnitGajiResponse'], ParentType, ContextType, RequireFields<MutationCreateUnitGajiArgs, 'id' | 'nama'>>;
+  createUnitGaji?: Resolver<ResolversTypes['MutationUnitGajiResponse'], ParentType, ContextType, RequireFields<MutationCreateUnitGajiArgs, 'id' | 'kodeAnakSatker' | 'nama'>>;
   createUnitKerja?: Resolver<ResolversTypes['MutationUnitKerjaResponse'], ParentType, ContextType, RequireFields<MutationCreateUnitKerjaArgs, 'id' | 'nama'>>;
   createUnitKerjaPegawai?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, RequireFields<MutationCreateUnitKerjaPegawaiArgs, 'isSecondary' | 'pegawaiId' | 'strukturOrganisasiId'>>;
   deleteBagianUnitKerja?: Resolver<ResolversTypes['MutationBagianUnitKerjaResponse'], ParentType, ContextType, RequireFields<MutationDeleteBagianUnitKerjaArgs, 'id'>>;
@@ -1294,7 +1307,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   updateStrukturOrganisasi?: Resolver<ResolversTypes['MutationStrukturOrganisasiResponse'], ParentType, ContextType, RequireFields<MutationUpdateStrukturOrganisasiArgs, 'grade' | 'id'>>;
   updateSubbagUnitKerja?: Resolver<ResolversTypes['MutationSubbagUnitKerjaResponse'], ParentType, ContextType, RequireFields<MutationUpdateSubbagUnitKerjaArgs, 'id' | 'nama'>>;
   updateSublevelJabatan?: Resolver<ResolversTypes['MutationSublevelJabatanResponse'], ParentType, ContextType, RequireFields<MutationUpdateSublevelJabatanArgs, 'id' | 'nama'>>;
-  updateUnitGaji?: Resolver<ResolversTypes['MutationUnitGajiResponse'], ParentType, ContextType, RequireFields<MutationUpdateUnitGajiArgs, 'id' | 'nama'>>;
+  updateUnitGaji?: Resolver<ResolversTypes['MutationUnitGajiResponse'], ParentType, ContextType, RequireFields<MutationUpdateUnitGajiArgs, 'id' | 'kodeAnakSatker' | 'nama'>>;
   updateUnitKerja?: Resolver<ResolversTypes['MutationUnitKerjaResponse'], ParentType, ContextType, RequireFields<MutationUpdateUnitKerjaArgs, 'id' | 'nama'>>;
   updateUnitKerjaPegawai?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, RequireFields<MutationUpdateUnitKerjaPegawaiArgs, 'isSecondary' | 'pegawaiId' | 'strukturOrganisasiId'>>;
   upsertDosen?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, RequireFields<MutationUpsertDosenArgs, 'pegawaiId'>>;
@@ -1585,6 +1598,7 @@ export type SublevelJabatanResolvers<ContextType = Context, ParentType extends R
 
 export type UnitGajiResolvers<ContextType = Context, ParentType extends ResolversParentTypes['UnitGaji'] = ResolversParentTypes['UnitGaji']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  kodeAnakSatker?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
