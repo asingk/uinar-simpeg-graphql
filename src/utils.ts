@@ -54,7 +54,7 @@ const cekAppApiKey = async (apikey: string | string[], prisma: PrismaClient) => 
 }
 
 export async function getUser(headers: IncomingHttpHeaders, prisma: PrismaClient) {
-    // return 'tester'
+    return 'tester'
     if (headers.authorization) {
         return keycloakUserInfo(headers.authorization)
     } else if(headers.apikey) {

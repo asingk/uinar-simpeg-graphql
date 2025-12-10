@@ -58,6 +58,8 @@ model Fakultas {
 model GradeRemun {
   id                 String               @id @db.VarChar(3)
   remun              Int
+  p1                 Int                  @default(0)
+  p2                 Int                  @default(0)
   createdBy          String               @map("created_by")
   createdAt          DateTime             @default(now()) @map("created_at")
   updatedBy          String               @map("updated_by")

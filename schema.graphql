@@ -205,6 +205,8 @@ type SublevelJabatan {
 type GradeRemun {
     id: String!
     remun: Int!
+    p1: Int!
+    p2: Int!
 }
 
 type UnitKerjaPegawai {
@@ -287,8 +289,8 @@ type Mutation {
     createUnitKerjaPegawai(pegawaiId: ID!, strukturOrganisasiId: ID!, isSecondary: Boolean!): MutationPegawaiResponse!
     updateUnitKerjaPegawai(pegawaiId: ID!, strukturOrganisasiId: ID!, isSecondary: Boolean!): MutationPegawaiResponse!
     deleteUnitKerjaPegawai(pegawaiId: ID!, strukturOrganisasiId: ID!): MutationPegawaiResponse!
-    createGradeRemun(id: ID!, remun: Int!): MutationGradeRemunResponse!
-    updateGradeRemun(id: ID!, remun: Int!): MutationGradeRemunResponse!
+    createGradeRemun(id: ID!, p1: Int!, p2: Int!): MutationGradeRemunResponse!
+    updateGradeRemun(id: ID!, p1: Int!, p2: Int!): MutationGradeRemunResponse!
     deleteGradeRemun(id: ID!): MutationGradeRemunResponse!
     createLeveljabatan(nama: String!, jabatanId: ID!, ssoRole: ID!): MutationLevelJabatanResponse!
     updateLevelJabatan(id: ID!, nama: String!, ssoRole: ID!): MutationLevelJabatanResponse!

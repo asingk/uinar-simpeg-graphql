@@ -112,6 +112,8 @@ export type FakultasJabatanDosen = {
 export type GradeRemun = {
   __typename?: 'GradeRemun';
   id: Scalars['String']['output'];
+  p1: Scalars['Int']['output'];
+  p2: Scalars['Int']['output'];
   remun: Scalars['Int']['output'];
 };
 
@@ -233,7 +235,8 @@ export type MutationCreateFakultasArgs = {
 
 export type MutationCreateGradeRemunArgs = {
   id: Scalars['ID']['input'];
-  remun: Scalars['Int']['input'];
+  p1: Scalars['Int']['input'];
+  p2: Scalars['Int']['input'];
 };
 
 
@@ -421,7 +424,8 @@ export type MutationUpdateFakultasArgs = {
 
 export type MutationUpdateGradeRemunArgs = {
   id: Scalars['ID']['input'];
-  remun: Scalars['Int']['input'];
+  p1: Scalars['Int']['input'];
+  p2: Scalars['Int']['input'];
 };
 
 
@@ -961,7 +965,7 @@ export type ResolverTypeWrapper<T> = Promise<T> | T;
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
   resolve: ResolverFn<TResult, TParent, TContext, TArgs>;
 };
-export type Resolver<TResult, TParent = {}, TContext = {}, TArgs = {}> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
+export type Resolver<TResult, TParent = Record<PropertyKey, never>, TContext = Record<PropertyKey, never>, TArgs = Record<PropertyKey, never>> = ResolverFn<TResult, TParent, TContext, TArgs> | ResolverWithResolve<TResult, TParent, TContext, TArgs>;
 
 export type ResolverFn<TResult, TParent, TContext, TArgs> = (
   parent: TParent,
@@ -998,21 +1002,21 @@ export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, 
   | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
   | SubscriptionResolverObject<TResult, TParent, TContext, TArgs>;
 
-export type SubscriptionResolver<TResult, TKey extends string, TParent = {}, TContext = {}, TArgs = {}> =
+export type SubscriptionResolver<TResult, TKey extends string, TParent = Record<PropertyKey, never>, TContext = Record<PropertyKey, never>, TArgs = Record<PropertyKey, never>> =
   | ((...args: any[]) => SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>)
   | SubscriptionObject<TResult, TKey, TParent, TContext, TArgs>;
 
-export type TypeResolveFn<TTypes, TParent = {}, TContext = {}> = (
+export type TypeResolveFn<TTypes, TParent = Record<PropertyKey, never>, TContext = Record<PropertyKey, never>> = (
   parent: TParent,
   context: TContext,
   info: GraphQLResolveInfo
 ) => Maybe<TTypes> | Promise<Maybe<TTypes>>;
 
-export type IsTypeOfResolverFn<T = {}, TContext = {}> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
+export type IsTypeOfResolverFn<T = Record<PropertyKey, never>, TContext = Record<PropertyKey, never>> = (obj: T, context: TContext, info: GraphQLResolveInfo) => boolean | Promise<boolean>;
 
 export type NextResolverFn<T> = () => Promise<T>;
 
-export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs = {}> = (
+export type DirectiveResolverFn<TResult = Record<PropertyKey, never>, TParent = Record<PropertyKey, never>, TContext = Record<PropertyKey, never>, TArgs = Record<PropertyKey, never>> = (
   next: NextResolverFn<TResult>,
   parent: TParent,
   args: TArgs,
@@ -1021,9 +1025,26 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 ) => TResult | Promise<TResult>;
 
 
+
+
 /** Mapping of interface types */
 export type ResolversInterfaceTypes<_RefType extends Record<string, unknown>> = ResolversObject<{
-  MutationResponse: ( MutationBagianUnitKerjaResponse ) | ( Omit<MutationFakultasResponse, 'fakultas'> & { fakultas?: Maybe<_RefType['Fakultas']> } ) | ( MutationGradeRemunResponse ) | ( Omit<MutationLevelJabatanResponse, 'level'> & { level?: Maybe<_RefType['LevelJabatan']> } ) | ( Omit<MutationPegawaiResponse, 'pegawai'> & { pegawai?: Maybe<_RefType['Pegawai']> } ) | ( MutationPosisiResponse ) | ( MutationProdiResponse ) | ( MutationStatusAktifResponse ) | ( Omit<MutationStrukturJabatanResponse, 'strukturJabatan'> & { strukturJabatan?: Maybe<_RefType['StrukturJabatan']> } ) | ( Omit<MutationStrukturOrganisasiResponse, 'strukturOrganisasi'> & { strukturOrganisasi?: Maybe<_RefType['StrukturOrganisasi']> } ) | ( MutationSubbagUnitKerjaResponse ) | ( MutationSublevelJabatanResponse ) | ( MutationUnitGajiResponse ) | ( MutationUnitKerjaResponse );
+  MutationResponse:
+    | ( MutationBagianUnitKerjaResponse )
+    | ( Omit<MutationFakultasResponse, 'fakultas'> & { fakultas?: Maybe<_RefType['Fakultas']> } )
+    | ( MutationGradeRemunResponse )
+    | ( Omit<MutationLevelJabatanResponse, 'level'> & { level?: Maybe<_RefType['LevelJabatan']> } )
+    | ( Omit<MutationPegawaiResponse, 'pegawai'> & { pegawai?: Maybe<_RefType['Pegawai']> } )
+    | ( MutationPosisiResponse )
+    | ( MutationProdiResponse )
+    | ( MutationStatusAktifResponse )
+    | ( Omit<MutationStrukturJabatanResponse, 'strukturJabatan'> & { strukturJabatan?: Maybe<_RefType['StrukturJabatan']> } )
+    | ( Omit<MutationStrukturOrganisasiResponse, 'strukturOrganisasi'> & { strukturOrganisasi?: Maybe<_RefType['StrukturOrganisasi']> } )
+    | ( MutationSubbagUnitKerjaResponse )
+    | ( MutationSublevelJabatanResponse )
+    | ( MutationUnitGajiResponse )
+    | ( MutationUnitKerjaResponse )
+  ;
 }>;
 
 /** Mapping between all available schema types and the resolvers types */
@@ -1051,7 +1072,7 @@ export type ResolversTypes = ResolversObject<{
   JenisKelaminEnum: JenisKelaminEnum;
   Kontak: ResolverTypeWrapper<Kontak>;
   LevelJabatan: ResolverTypeWrapper<LevelJabatanModel>;
-  Mutation: ResolverTypeWrapper<{}>;
+  Mutation: ResolverTypeWrapper<Record<PropertyKey, never>>;
   MutationBagianUnitKerjaResponse: ResolverTypeWrapper<MutationBagianUnitKerjaResponse>;
   MutationFakultasResponse: ResolverTypeWrapper<Omit<MutationFakultasResponse, 'fakultas'> & { fakultas?: Maybe<ResolversTypes['Fakultas']> }>;
   MutationGradeRemunResponse: ResolverTypeWrapper<MutationGradeRemunResponse>;
@@ -1075,7 +1096,7 @@ export type ResolversTypes = ResolversObject<{
   Posisi: ResolverTypeWrapper<Posisi>;
   Prodi: ResolverTypeWrapper<Prodi>;
   ProdiJabatanDosen: ResolverTypeWrapper<ProdiJabatanDosenModel>;
-  Query: ResolverTypeWrapper<{}>;
+  Query: ResolverTypeWrapper<Record<PropertyKey, never>>;
   Sort: Sort;
   SsoRole: ResolverTypeWrapper<SsoRole>;
   StatusAktif: ResolverTypeWrapper<StatusAktif>;
@@ -1116,7 +1137,7 @@ export type ResolversParentTypes = ResolversObject<{
   JabatanLevel: JabatanLevelModel;
   Kontak: Kontak;
   LevelJabatan: LevelJabatanModel;
-  Mutation: {};
+  Mutation: Record<PropertyKey, never>;
   MutationBagianUnitKerjaResponse: MutationBagianUnitKerjaResponse;
   MutationFakultasResponse: Omit<MutationFakultasResponse, 'fakultas'> & { fakultas?: Maybe<ResolversParentTypes['Fakultas']> };
   MutationGradeRemunResponse: MutationGradeRemunResponse;
@@ -1140,7 +1161,7 @@ export type ResolversParentTypes = ResolversObject<{
   Posisi: Posisi;
   Prodi: Prodi;
   ProdiJabatanDosen: ProdiJabatanDosenModel;
-  Query: {};
+  Query: Record<PropertyKey, never>;
   SsoRole: SsoRole;
   StatusAktif: StatusAktif;
   StatusPegawai: StatusPegawai;
@@ -1163,20 +1184,17 @@ export type AlamatResolvers<ContextType = Context, ParentType extends ResolversP
   kabKota?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   kodePos?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   provinsi?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type BagianUnitKerjaResolvers<ContextType = Context, ParentType extends ResolversParentTypes['BagianUnitKerja'] = ResolversParentTypes['BagianUnitKerja']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type DaftarPegawaiResponseResolvers<ContextType = Context, ParentType extends ResolversParentTypes['DaftarPegawaiResponse'] = ResolversParentTypes['DaftarPegawaiResponse']> = ResolversObject<{
   count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['ID']>, ParentType, ContextType>;
   pegawai?: Resolver<Maybe<Array<ResolversTypes['Pegawai']>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
@@ -1199,32 +1217,29 @@ export type DosenResolvers<ContextType = Context, ParentType extends ResolversPa
   serdosTahunSertifikasi?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   sintaId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   wosId?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type FakultasResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Fakultas'] = ResolversParentTypes['Fakultas']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   prodi?: Resolver<Maybe<Array<ResolversTypes['Prodi']>>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type FakultasJabatanDosenResolvers<ContextType = Context, ParentType extends ResolversParentTypes['FakultasJabatanDosen'] = ResolversParentTypes['FakultasJabatanDosen']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type GradeRemunResolvers<ContextType = Context, ParentType extends ResolversParentTypes['GradeRemun'] = ResolversParentTypes['GradeRemun']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  p1?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  p2?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   remun?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type JabatanResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Jabatan'] = ResolversParentTypes['Jabatan']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type JabatanKemenagResolvers<ContextType = Context, ParentType extends ResolversParentTypes['JabatanKemenag'] = ResolversParentTypes['JabatanKemenag']> = ResolversObject<{
@@ -1233,21 +1248,18 @@ export type JabatanKemenagResolvers<ContextType = Context, ParentType extends Re
   noSk?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   tmt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   unitKerja?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type JabatanLevelResolvers<ContextType = Context, ParentType extends ResolversParentTypes['JabatanLevel'] = ResolversParentTypes['JabatanLevel']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   level?: Resolver<Array<ResolversTypes['StrukturLevelJabatan']>, ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type KontakResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Kontak'] = ResolversParentTypes['Kontak']> = ResolversObject<{
   emailPribadi?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   emailUinar?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   noHp?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type LevelJabatanResolvers<ContextType = Context, ParentType extends ResolversParentTypes['LevelJabatan'] = ResolversParentTypes['LevelJabatan']> = ResolversObject<{
@@ -1255,13 +1267,12 @@ export type LevelJabatanResolvers<ContextType = Context, ParentType extends Reso
   jabatan?: Resolver<ResolversTypes['Jabatan'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   ssoRole?: Resolver<ResolversTypes['SsoRole'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   createBagianUnitKerja?: Resolver<ResolversTypes['MutationBagianUnitKerjaResponse'], ParentType, ContextType, RequireFields<MutationCreateBagianUnitKerjaArgs, 'nama'>>;
   createFakultas?: Resolver<ResolversTypes['MutationFakultasResponse'], ParentType, ContextType, RequireFields<MutationCreateFakultasArgs, 'id' | 'nama'>>;
-  createGradeRemun?: Resolver<ResolversTypes['MutationGradeRemunResponse'], ParentType, ContextType, RequireFields<MutationCreateGradeRemunArgs, 'id' | 'remun'>>;
+  createGradeRemun?: Resolver<ResolversTypes['MutationGradeRemunResponse'], ParentType, ContextType, RequireFields<MutationCreateGradeRemunArgs, 'id' | 'p1' | 'p2'>>;
   createJabatanPegawai?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, RequireFields<MutationCreateJabatanPegawaiArgs, 'pegawaiId' | 'strukturJabatanId'>>;
   createLeveljabatan?: Resolver<ResolversTypes['MutationLevelJabatanResponse'], ParentType, ContextType, RequireFields<MutationCreateLeveljabatanArgs, 'jabatanId' | 'nama' | 'ssoRole'>>;
   createPegawaiNotSync?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, Partial<MutationCreatePegawaiNotSyncArgs>>;
@@ -1295,7 +1306,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   syncAsn?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, RequireFields<MutationSyncAsnArgs, 'id'>>;
   updateBagianUnitKerja?: Resolver<ResolversTypes['MutationBagianUnitKerjaResponse'], ParentType, ContextType, RequireFields<MutationUpdateBagianUnitKerjaArgs, 'id' | 'nama'>>;
   updateFakultas?: Resolver<ResolversTypes['MutationFakultasResponse'], ParentType, ContextType, RequireFields<MutationUpdateFakultasArgs, 'id' | 'nama'>>;
-  updateGradeRemun?: Resolver<ResolversTypes['MutationGradeRemunResponse'], ParentType, ContextType, RequireFields<MutationUpdateGradeRemunArgs, 'id' | 'remun'>>;
+  updateGradeRemun?: Resolver<ResolversTypes['MutationGradeRemunResponse'], ParentType, ContextType, RequireFields<MutationUpdateGradeRemunArgs, 'id' | 'p1' | 'p2'>>;
   updateLevelJabatan?: Resolver<ResolversTypes['MutationLevelJabatanResponse'], ParentType, ContextType, RequireFields<MutationUpdateLevelJabatanArgs, 'id' | 'nama' | 'ssoRole'>>;
   updatePegawaiProfil?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, RequireFields<MutationUpdatePegawaiProfilArgs, 'id' | 'input'>>;
   updatePegawaiStatusAktif?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, RequireFields<MutationUpdatePegawaiStatusAktifArgs, 'id' | 'statusAktifId'>>;
@@ -1371,9 +1382,6 @@ export type MutationProdiResponseResolvers<ContextType = Context, ParentType ext
 
 export type MutationResponseResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MutationResponse'] = ResolversParentTypes['MutationResponse']> = ResolversObject<{
   __resolveType: TypeResolveFn<'MutationBagianUnitKerjaResponse' | 'MutationFakultasResponse' | 'MutationGradeRemunResponse' | 'MutationLevelJabatanResponse' | 'MutationPegawaiResponse' | 'MutationPosisiResponse' | 'MutationProdiResponse' | 'MutationStatusAktifResponse' | 'MutationStrukturJabatanResponse' | 'MutationStrukturOrganisasiResponse' | 'MutationSubbagUnitKerjaResponse' | 'MutationSublevelJabatanResponse' | 'MutationUnitGajiResponse' | 'MutationUnitKerjaResponse', ParentType, ContextType>;
-  code?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  message?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  success?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
 }>;
 
 export type MutationStatusAktifResponseResolvers<ContextType = Context, ParentType extends ResolversParentTypes['MutationStatusAktifResponse'] = ResolversParentTypes['MutationStatusAktifResponse']> = ResolversObject<{
@@ -1438,7 +1446,6 @@ export type PangkatResolvers<ContextType = Context, ParentType extends Resolvers
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   noSk?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   tmt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type PegawaiResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Pegawai'] = ResolversParentTypes['Pegawai']> = ResolversObject<{
@@ -1472,7 +1479,6 @@ export type PegawaiResolvers<ContextType = Context, ParentType extends Resolvers
   unitRemun?: Resolver<Maybe<ResolversTypes['UnitGaji']>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
   updatedBy?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type PendidikanResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Pendidikan'] = ResolversParentTypes['Pendidikan']> = ResolversObject<{
@@ -1483,27 +1489,23 @@ export type PendidikanResolvers<ContextType = Context, ParentType extends Resolv
   lokasiSekolah?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   namaSekolah?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   tahunLulus?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type PosisiResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Posisi'] = ResolversParentTypes['Posisi']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   kategori?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type ProdiResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Prodi'] = ResolversParentTypes['Prodi']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type ProdiJabatanDosenResolvers<ContextType = Context, ParentType extends ResolversParentTypes['ProdiJabatanDosen'] = ResolversParentTypes['ProdiJabatanDosen']> = ResolversObject<{
   fakultas?: Resolver<ResolversTypes['FakultasJabatanDosen'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
@@ -1539,7 +1541,6 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
 export type SsoRoleResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SsoRole'] = ResolversParentTypes['SsoRole']> = ResolversObject<{
   code?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type StatusAktifResolvers<ContextType = Context, ParentType extends ResolversParentTypes['StatusAktif'] = ResolversParentTypes['StatusAktif']> = ResolversObject<{
@@ -1547,7 +1548,6 @@ export type StatusAktifResolvers<ContextType = Context, ParentType extends Resol
   isActive?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   ssoEnabled?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type StatusPegawaiResolvers<ContextType = Context, ParentType extends ResolversParentTypes['StatusPegawai'] = ResolversParentTypes['StatusPegawai']> = ResolversObject<{
@@ -1555,7 +1555,6 @@ export type StatusPegawaiResolvers<ContextType = Context, ParentType extends Res
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   isSync?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type StrukturJabatanResolvers<ContextType = Context, ParentType extends ResolversParentTypes['StrukturJabatan'] = ResolversParentTypes['StrukturJabatan']> = ResolversObject<{
@@ -1563,14 +1562,12 @@ export type StrukturJabatanResolvers<ContextType = Context, ParentType extends R
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   level?: Resolver<ResolversTypes['LevelJabatan'], ParentType, ContextType>;
   sublevel?: Resolver<Maybe<ResolversTypes['SublevelJabatan']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type StrukturLevelJabatanResolvers<ContextType = Context, ParentType extends ResolversParentTypes['StrukturLevelJabatan'] = ResolversParentTypes['StrukturLevelJabatan']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   ssoRole?: Resolver<ResolversTypes['SsoRole'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type StrukturOrganisasiResolvers<ContextType = Context, ParentType extends ResolversParentTypes['StrukturOrganisasi'] = ResolversParentTypes['StrukturOrganisasi']> = ResolversObject<{
@@ -1581,32 +1578,27 @@ export type StrukturOrganisasiResolvers<ContextType = Context, ParentType extend
   posisi?: Resolver<ResolversTypes['Posisi'], ParentType, ContextType>;
   subbag?: Resolver<Maybe<ResolversTypes['SubbagUnitKerja']>, ParentType, ContextType>;
   unitKerja?: Resolver<Maybe<ResolversTypes['UnitKerja']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type SubbagUnitKerjaResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SubbagUnitKerja'] = ResolversParentTypes['SubbagUnitKerja']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type SublevelJabatanResolvers<ContextType = Context, ParentType extends ResolversParentTypes['SublevelJabatan'] = ResolversParentTypes['SublevelJabatan']> = ResolversObject<{
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type UnitGajiResolvers<ContextType = Context, ParentType extends ResolversParentTypes['UnitGaji'] = ResolversParentTypes['UnitGaji']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   kodeAnakSatker?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type UnitKerjaResolvers<ContextType = Context, ParentType extends ResolversParentTypes['UnitKerja'] = ResolversParentTypes['UnitKerja']> = ResolversObject<{
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   nama?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type UnitKerjaPegawaiResolvers<ContextType = Context, ParentType extends ResolversParentTypes['UnitKerjaPegawai'] = ResolversParentTypes['UnitKerjaPegawai']> = ResolversObject<{
@@ -1617,7 +1609,6 @@ export type UnitKerjaPegawaiResolvers<ContextType = Context, ParentType extends 
   posisi?: Resolver<ResolversTypes['Posisi'], ParentType, ContextType>;
   subbag?: Resolver<Maybe<ResolversTypes['SubbagUnitKerja']>, ParentType, ContextType>;
   unitKerja?: Resolver<Maybe<ResolversTypes['UnitKerja']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = Context> = ResolversObject<{

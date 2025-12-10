@@ -1173,7 +1173,7 @@ const mutations: MutationResolvers = {
         }
     },
 
-    async createGradeRemun(_, {id, remun}, {dataSources, user}){
+    async createGradeRemun(_, {id, p1, p2}, {dataSources, user}){
         if (!user) {
             throw new GraphQLError('User is not authenticated', {
                 extensions: {
@@ -1186,7 +1186,9 @@ const mutations: MutationResolvers = {
             const grade = await dataSources.prisma.gradeRemun.create({
                 data: {
                     id: id,
-                    remun: remun,
+                    p1: p1,
+                    p2: p2,
+                    remun: p1 + p2,
                     createdBy: user,
                     updatedBy: user,
                 },
@@ -1207,7 +1209,7 @@ const mutations: MutationResolvers = {
         }
     },
 
-    async updateGradeRemun(_, {id, remun}, {dataSources, user}){
+    async updateGradeRemun(_, {id, p1, p2}, {dataSources, user}){
         if (!user) {
             throw new GraphQLError('User is not authenticated', {
                 extensions: {
@@ -1222,7 +1224,9 @@ const mutations: MutationResolvers = {
                     id
                 },
                 data: {
-                    remun: remun,
+                    p1: p1,
+                    p2: p2,
+                    remun: p1 + p2,
                     updatedBy: user,
                 },
             })
