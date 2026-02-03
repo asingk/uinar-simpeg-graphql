@@ -700,7 +700,7 @@ export type Pendidikan = {
   __typename?: 'Pendidikan';
   akta?: Maybe<Scalars['String']['output']>;
   fakultas?: Maybe<Scalars['String']['output']>;
-  jenjang: Scalars['String']['output'];
+  jenjang?: Maybe<Scalars['String']['output']>;
   jurusan?: Maybe<Scalars['String']['output']>;
   lokasiSekolah?: Maybe<Scalars['String']['output']>;
   namaSekolah: Scalars['String']['output'];
@@ -1478,7 +1478,7 @@ export type PegawaiResolvers<ContextType = Context, ParentType extends Resolvers
 export type PendidikanResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Pendidikan'] = ResolversParentTypes['Pendidikan']> = ResolversObject<{
   akta?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   fakultas?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  jenjang?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  jenjang?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   jurusan?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   lokasiSekolah?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   namaSekolah?: Resolver<ResolversTypes['String'], ParentType, ContextType>;

@@ -119,7 +119,7 @@ type Pendidikan {
     fakultas: String
     jurusan: String
     tahunLulus: Int!
-    jenjang: String!
+    jenjang: String
     lokasiSekolah: String
     akta: String
 }
