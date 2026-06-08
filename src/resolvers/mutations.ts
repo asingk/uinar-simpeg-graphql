@@ -1,4 +1,4 @@
-import {JenisJabatanType, Prisma} from "@prisma/client";
+import { JenisJabatanType, Prisma } from "../../prisma/generated/client.js";
 import { MutationResolvers } from "../types";
 import { randomUUID } from 'crypto'
 import {GraphQLError} from "graphql";
@@ -1173,7 +1173,7 @@ const mutations: MutationResolvers = {
         }
     },
 
-    async createGradeRemun(_, {id, remun}, {dataSources, user}){
+    async createGradeRemun(_, {grade, p1, p2}, {dataSources, user}){
         if (!user) {
             throw new GraphQLError('User is not authenticated', {
                 extensions: {
@@ -1183,10 +1183,11 @@ const mutations: MutationResolvers = {
             });
         }
         try {
-            const grade = await dataSources.prisma.gradeRemun.create({
+            const gradeCreated = await dataSources.prisma.gradeRemun.create({
                 data: {
-                    id: id,
-                    remun: remun,
+                    grade,
+                    p1,
+                    p2,
                     createdBy: user,
                     updatedBy: user,
                 },
@@ -1194,8 +1195,8 @@ const mutations: MutationResolvers = {
             return {
                 code: 200,
                 success: true,
-                message: `Sukses menambah grade remun ${id}`,
-                gradeRemun: grade,
+                message: `Sukses menambah grade remun ${gradeCreated.id}`,
+                gradeRemun: gradeCreated,
             }
         } catch (err) {
             return {
@@ -1207,7 +1208,7 @@ const mutations: MutationResolvers = {
         }
     },
 
-    async updateGradeRemun(_, {id, remun}, {dataSources, user}){
+    async updateGradeRemun(_, {id, p1, p2}, {dataSources, user}){
         if (!user) {
             throw new GraphQLError('User is not authenticated', {
                 extensions: {
@@ -1222,7 +1223,8 @@ const mutations: MutationResolvers = {
                     id
                 },
                 data: {
-                    remun: remun,
+                    p1,
+                    p2,
                     updatedBy: user,
                 },
             })
@@ -2638,6 +2640,7 @@ const mutations: MutationResolvers = {
             where: {
                 levelJabatanId: input.levelId,
                 sublevelJabatanId: input.sublevelId || null,
+                gradeId: input.grade || null,
             }
         })
         if (isExist) {

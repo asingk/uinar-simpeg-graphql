@@ -3,10 +3,12 @@
     "rootDirs": ["src"],
     "outDir": "dist",
     "lib": ["es2020", "dom"],
-    "target": "es2020",
-    "module": "esnext",
-    "moduleResolution": "node",
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": false,
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "types": ["node"]
   }
 }

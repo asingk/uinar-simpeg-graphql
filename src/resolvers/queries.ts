@@ -1,5 +1,5 @@
 import { QueryResolvers } from "../types";
-import {Prisma} from "@prisma/client";
+import { Prisma } from "../../prisma/generated/client.js";
 
 // Use the generated `QueryResolvers` type to type check our queries!
 const queries: QueryResolvers = {
@@ -166,7 +166,7 @@ const queries: QueryResolvers = {
                 { unitKerjaId: {sort: 'asc', nulls: 'first' } },
                 { bagianId: {sort: 'asc', nulls: 'first'} },
                 { subbagId: {sort: 'asc', nulls: 'first'} },
-                { gradeRemun: { remun: 'desc' } },
+                { gradeRemun: { grade: 'desc' } },
             ],
         })
     },
@@ -221,9 +221,10 @@ const queries: QueryResolvers = {
 
     daftarGradeRemun: (_, __, { dataSources }) => {
         return dataSources.prisma.gradeRemun.findMany({
-            orderBy: {
-                remun: 'asc'
-            }
+            orderBy: [
+                { p1: 'asc' },
+                { p2: 'asc' },
+            ]
         })
     },
 

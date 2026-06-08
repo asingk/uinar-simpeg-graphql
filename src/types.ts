@@ -111,8 +111,10 @@ export type FakultasJabatanDosen = {
 
 export type GradeRemun = {
   __typename?: 'GradeRemun';
-  id: Scalars['String']['output'];
-  remun: Scalars['Int']['output'];
+  grade: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  p1: Scalars['Int']['output'];
+  p2: Scalars['Int']['output'];
 };
 
 export type Jabatan = {
@@ -232,8 +234,9 @@ export type MutationCreateFakultasArgs = {
 
 
 export type MutationCreateGradeRemunArgs = {
-  id: Scalars['ID']['input'];
-  remun: Scalars['Int']['input'];
+  grade: Scalars['String']['input'];
+  p1: Scalars['Int']['input'];
+  p2: Scalars['Int']['input'];
 };
 
 
@@ -421,7 +424,8 @@ export type MutationUpdateFakultasArgs = {
 
 export type MutationUpdateGradeRemunArgs = {
   id: Scalars['ID']['input'];
-  remun: Scalars['Int']['input'];
+  p1: Scalars['Int']['input'];
+  p2: Scalars['Int']['input'];
 };
 
 
@@ -1216,8 +1220,10 @@ export type FakultasJabatanDosenResolvers<ContextType = Context, ParentType exte
 }>;
 
 export type GradeRemunResolvers<ContextType = Context, ParentType extends ResolversParentTypes['GradeRemun'] = ResolversParentTypes['GradeRemun']> = ResolversObject<{
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  remun?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  grade?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  p1?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  p2?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -1261,7 +1267,7 @@ export type LevelJabatanResolvers<ContextType = Context, ParentType extends Reso
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
   createBagianUnitKerja?: Resolver<ResolversTypes['MutationBagianUnitKerjaResponse'], ParentType, ContextType, RequireFields<MutationCreateBagianUnitKerjaArgs, 'nama'>>;
   createFakultas?: Resolver<ResolversTypes['MutationFakultasResponse'], ParentType, ContextType, RequireFields<MutationCreateFakultasArgs, 'id' | 'nama'>>;
-  createGradeRemun?: Resolver<ResolversTypes['MutationGradeRemunResponse'], ParentType, ContextType, RequireFields<MutationCreateGradeRemunArgs, 'id' | 'remun'>>;
+  createGradeRemun?: Resolver<ResolversTypes['MutationGradeRemunResponse'], ParentType, ContextType, RequireFields<MutationCreateGradeRemunArgs, 'grade' | 'p1' | 'p2'>>;
   createJabatanPegawai?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, RequireFields<MutationCreateJabatanPegawaiArgs, 'pegawaiId' | 'strukturJabatanId'>>;
   createLeveljabatan?: Resolver<ResolversTypes['MutationLevelJabatanResponse'], ParentType, ContextType, RequireFields<MutationCreateLeveljabatanArgs, 'jabatanId' | 'nama' | 'ssoRole'>>;
   createPegawaiNotSync?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, Partial<MutationCreatePegawaiNotSyncArgs>>;
@@ -1295,7 +1301,7 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   syncAsn?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, RequireFields<MutationSyncAsnArgs, 'id'>>;
   updateBagianUnitKerja?: Resolver<ResolversTypes['MutationBagianUnitKerjaResponse'], ParentType, ContextType, RequireFields<MutationUpdateBagianUnitKerjaArgs, 'id' | 'nama'>>;
   updateFakultas?: Resolver<ResolversTypes['MutationFakultasResponse'], ParentType, ContextType, RequireFields<MutationUpdateFakultasArgs, 'id' | 'nama'>>;
-  updateGradeRemun?: Resolver<ResolversTypes['MutationGradeRemunResponse'], ParentType, ContextType, RequireFields<MutationUpdateGradeRemunArgs, 'id' | 'remun'>>;
+  updateGradeRemun?: Resolver<ResolversTypes['MutationGradeRemunResponse'], ParentType, ContextType, RequireFields<MutationUpdateGradeRemunArgs, 'id' | 'p1' | 'p2'>>;
   updateLevelJabatan?: Resolver<ResolversTypes['MutationLevelJabatanResponse'], ParentType, ContextType, RequireFields<MutationUpdateLevelJabatanArgs, 'id' | 'nama' | 'ssoRole'>>;
   updatePegawaiProfil?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, RequireFields<MutationUpdatePegawaiProfilArgs, 'id' | 'input'>>;
   updatePegawaiStatusAktif?: Resolver<ResolversTypes['MutationPegawaiResponse'], ParentType, ContextType, RequireFields<MutationUpdatePegawaiStatusAktifArgs, 'id' | 'statusAktifId'>>;

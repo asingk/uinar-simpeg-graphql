@@ -1,10 +1,10 @@
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
+  output   = "./generated"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
 }
 
 model BagianUnitKerja {
@@ -56,8 +56,10 @@ model Fakultas {
 }
 
 model GradeRemun {
-  id                 String               @id @db.VarChar(3)
-  remun              Int
+  id                 String               @id @default(uuid()) @db.Uuid
+  grade              String               @unique
+  p1                 Int
+  p2                 Int
   createdBy          String               @map("created_by")
   createdAt          DateTime             @default(now()) @map("created_at")
   updatedBy          String               @map("updated_by")
@@ -98,7 +100,7 @@ model StrukturJabatan {
   id                String           @id @default(uuid()) @db.Uuid
   levelJabatanId    String           @map("level_id") @db.Uuid
   sublevelJabatanId String?          @map("sublevel_id") @db.Uuid
-  gradeId           String?          @map("grade_id") @db.VarChar(3)
+  gradeId           String?          @map("grade_id") @db.Uuid
   createdBy         String           @map("created_by")
   createdAt         DateTime         @default(now()) @map("created_at")
   updatedBy         String           @map("updated_by")
@@ -325,7 +327,7 @@ model StrukturOrganisasi {
   bagianId         String?            @map("bag_id") @db.Uuid
   subbagId         String?            @map("subbag_id") @db.Uuid
   posisiId         String             @map("posisi_id") @db.VarChar(7)
-  gradeId          String?            @map("grade_id") @db.VarChar(3)
+  gradeId          String?            @map("grade_id") @db.Uuid
   createdBy        String             @map("created_by")
   createdAt        DateTime           @default(now()) @map("created_at")
   updatedBy        String             @map("updated_by")

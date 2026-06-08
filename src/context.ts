@@ -1,4 +1,4 @@
-import {PrismaClient} from '@prisma/client'
+import { PrismaClient } from "../prisma/generated/client.js";
 import {RopegApi} from "./datasources/ropeg-api";
 import {KeycloakApi} from "./datasources/keycloak-api";
 

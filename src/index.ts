@@ -1,15 +1,19 @@
+import "dotenv/config";
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { readFileSync } from 'fs';
 import resolvers from "./resolvers/index.js";
 import { Context } from "./context.js";
 import { resolvers as scalarResolvers, typeDefs as scalarTypeDefs } from 'graphql-scalars'
-import {PrismaClient} from "@prisma/client";
+import { PrismaClient } from "../prisma/generated/client.js";
+import { PrismaPg } from "@prisma/adapter-pg";
 import {RopegApi} from "./datasources/ropeg-api.js";
 import {getUser} from "./utils.js";
 import {KeycloakApi} from "./datasources/keycloak-api.js";
 
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! });
 const prisma = new PrismaClient({
+    adapter,
     log: ['error'],
 })
 

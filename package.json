@@ -1,12 +1,16 @@
 {
   "name": "simpeg-graphql-v3",
-  "version": "4.2.1",
+  "version": "5.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "generate": "graphql-codegen --config codegen.yml",
-    "compile": "npm run generate && tsc",
-    "start": "npm run compile && node ./dist/index.js"
+    "dev": "tsx src/index.ts",
+    "generate": "prisma generate",
+    "graphql:generate": "graphql-codegen --config codegen.yml",
+    "migrate": "prisma migrate dev",
+    "build": "npm run graphql:generate && npm run generate && tsc -p tsconfig.json",
+    "compile": "npm run build",
+    "start": "npm run build && node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
@@ -16,19 +20,22 @@
     "@apollo/datasource-rest": "^6.4.1",
     "@apollo/server": "^4.11.2",
     "@graphql-tools/schema": "^10.0.13",
-    "@prisma/client": "6.1.0",
-    "axios": "1.12.0",
+    "@prisma/adapter-pg": "^7.4.2",
+    "@prisma/client": "^7.0.0",
+    "axios": "1.13.5",
     "graphql": "^16.10.0",
     "graphql-scalars": "^1.24.0",
-    "graphql-tag": "^2.12.6"
+    "graphql-tag": "^2.12.6",
+    "dotenv": "^17.3.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.3",
     "@graphql-codegen/typescript": "4.1.2",
     "@graphql-codegen/typescript-resolvers": "4.4.1",
-    "dotenv": "^16.4.7",
+    "@types/pg": "^8.18.0",
     "nodemon": "^3.1.9",
-    "prisma": "6.1.0",
+    "prisma": "^7.0.0",
+    "tsx": "^4.21.0",
     "typescript": "5.7.2"
   }
 }
