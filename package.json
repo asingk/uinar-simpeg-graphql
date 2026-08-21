@@ -1,6 +1,6 @@
 {
   "name": "simpeg-graphql-v3",
-  "version": "4.2.1",
+  "version": "5.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
