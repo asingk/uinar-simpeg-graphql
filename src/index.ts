@@ -91,9 +91,6 @@ const handleDrhDownload: express.RequestHandler = async (req, res) => {
 
 // Route endpoints untuk download PDF DRH
 app.get('/api/pegawai/:id/drh', handleDrhDownload);
-app.get('/api/pegawai/:id/pdf', handleDrhDownload);
-app.get('/pdf/drh/:id', handleDrhDownload);
-app.get('/pegawai/:id/pdf', handleDrhDownload);
 
 // Apollo GraphQL Middleware
 app.use(
